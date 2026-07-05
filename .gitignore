@@ -1,0 +1,13 @@
+# Go build artifacts (root-level built binary only; do not ignore cmd/)
+/bin/
+/siteflow-gateway-sync
+*.test
+*.out
+
+# Editor / OS noise
+*.swp
+.DS_Store
+
+# Rust (none in this repo, kept for estate ecosystem parity)
+/target
+**/*.rs.bk
