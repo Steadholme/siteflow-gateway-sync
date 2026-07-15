@@ -80,7 +80,7 @@ go test ./... -race
       # 只读 SiteFlow 库（建议专用只读角色）
       SITEFLOW_DATABASE_URL: "postgres://sync_ro@siteflow-postgres:5432/siteflow?sslmode=disable"
       # 读写 Steadholme routes 库
-      ROUTES_DATABASE_URL: "postgres://routes_rw@holdfast-postgres:5432/holdfast?sslmode=disable"
+      ROUTES_DATABASE_URL: "postgres://routes_rw@holdfast-postgres:5432/steadholme?sslmode=disable"
       SITEFLOW_UPSTREAM: "http://siteflow-api:9360"
       SYNC_INTERVAL: "30s"
       BIND_ADDR: "0.0.0.0:9385"
