@@ -1,6 +1,6 @@
 # siteflow-gateway-sync
 
-把 SiteFlow 部署站点的公网 host 同步成 Holdfast 网关（Sluice）的 public 路由，让
+把 SiteFlow 部署站点的公网 host 同步成 Steadholme 网关（Sluice）的 public 路由，让
 部署站点能从外网访问。纯 Go、无状态、单向 reconciler，照 estate Go 服务惯例
 （`net/http` healthz、结构化 slog、优雅退出、scratch 多阶段镜像）。
 
@@ -15,7 +15,7 @@
      域，仅已校验）。
    - 去重、小写化、合法性过滤（非空、含点、无空格、无 `*`、不等于控制台
      `siteflow.w33d.xyz`）。
-2. 对每个 host upsert 一行到 Holdfast `routes`：
+2. 对每个 host upsert 一行到 Steadholme `routes`：
    `name='sfsite-'+substr(sha1(host),0,12)`、`path_prefix='/'`、
    `upstream=$SITEFLOW_UPSTREAM`、`protected=false`、`auth='public'`、
    `require_group=''`，`waf` 用列默认（不写、不覆盖）。
@@ -41,7 +41,7 @@
 | 变量 | 必填 | 默认 | 说明 |
 |------|------|------|------|
 | `SITEFLOW_DATABASE_URL` | 是 | — | **只读** SiteFlow 库 DSN（host 来源）|
-| `ROUTES_DATABASE_URL` | 是 | — | **读写** Holdfast 库 DSN（`routes` 表）|
+| `ROUTES_DATABASE_URL` | 是 | — | **读写** Steadholme 库 DSN（`routes` 表）|
 | `SITEFLOW_UPSTREAM` | 否 | `http://siteflow-api:9360` | 站点路由的上游 |
 | `SYNC_INTERVAL` | 否 | `30s` | 轮询间隔（Go duration，如 `30s`）|
 | `BIND_ADDR` | 否 | `0.0.0.0:9385` | healthz 监听地址 |
@@ -62,7 +62,7 @@ go test ./... -race
 ## Compose stanza（草案，供部署接线）
 
 > 端口 9385 仅内部（healthz），不对外发布。两个 DSN 应指向 estate 内网 Postgres：
-> SiteFlow 库用只读角色，Holdfast 库用能写 `routes` 的角色。
+> SiteFlow 库用只读角色，Steadholme 库用能写 `routes` 的角色。
 > 注意：`SITEFLOW_UPSTREAM` 默认 `http://siteflow-api:9360`，若 SiteFlow API 实际
 > 服务名 / 端口不同（如 compose 里的 `8787`），部署时按实际值覆盖。
 
@@ -79,7 +79,7 @@ go test ./... -race
     environment:
       # 只读 SiteFlow 库（建议专用只读角色）
       SITEFLOW_DATABASE_URL: "postgres://sync_ro@siteflow-postgres:5432/siteflow?sslmode=disable"
-      # 读写 Holdfast routes 库
+      # 读写 Steadholme routes 库
       ROUTES_DATABASE_URL: "postgres://routes_rw@holdfast-postgres:5432/holdfast?sslmode=disable"
       SITEFLOW_UPSTREAM: "http://siteflow-api:9360"
       SYNC_INTERVAL: "30s"

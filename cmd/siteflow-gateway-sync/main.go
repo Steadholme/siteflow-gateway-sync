@@ -1,10 +1,10 @@
 // Command siteflow-gateway-sync reconciles the set of publicly reachable
-// SiteFlow deployment hosts into the Holdfast gateway (Sluice) routes table so
+// SiteFlow deployment hosts into the Steadholme gateway (Sluice) routes table so
 // deployed sites become reachable from the public internet.
 //
 // It runs a reconcile loop (default every 30s), reading host sources from the
 // read-only SiteFlow database and upserting/pruning only the sfsite- namespace of
-// the read-write Holdfast routes database. A /healthz endpoint is served on
+// the read-write Steadholme routes database. A /healthz endpoint is served on
 // BIND_ADDR for container health checks.
 package main
 

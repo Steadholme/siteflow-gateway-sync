@@ -34,14 +34,14 @@ func (s *SiteflowDB) VerifiedDomains(ctx context.Context) ([]string, error) {
 	return queryStrings(ctx, s.pool, selectVerifiedDomainsSQL)
 }
 
-// RoutesDB reads and writes only the sfsite- namespace of the Holdfast routes
+// RoutesDB reads and writes only the sfsite- namespace of the Steadholme routes
 // table. Every write re-asserts the namespace at the SQL layer so an estate core
 // route can never be mutated.
 type RoutesDB struct {
 	pool *pgxpool.Pool
 }
 
-// NewRoutesDB wraps the read-write Holdfast routes connection pool.
+// NewRoutesDB wraps the read-write Steadholme routes connection pool.
 func NewRoutesDB(pool *pgxpool.Pool) *RoutesDB { return &RoutesDB{pool: pool} }
 
 const (

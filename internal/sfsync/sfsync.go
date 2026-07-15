@@ -1,5 +1,5 @@
 // Package sfsync reconciles the set of publicly reachable SiteFlow deployment
-// hosts into the Holdfast gateway (Sluice) `routes` table, so a deployed site
+// hosts into the Steadholme gateway (Sluice) `routes` table, so a deployed site
 // becomes reachable from the public internet through the gateway.
 //
 // The whole design turns on one invariant: this service owns exactly the routes
@@ -38,7 +38,7 @@ const (
 	DefaultUpstream = "http://siteflow-api:9360"
 )
 
-// Route is a single row this service manages in the Holdfast routes table. It
+// Route is a single row this service manages in the Steadholme routes table. It
 // intentionally omits the waf column so the table's own DEFAULT applies and this
 // service never overrides an operator's WAF setting.
 type Route struct {
@@ -62,7 +62,7 @@ type Source interface {
 	VerifiedDomains(ctx context.Context) ([]string, error)
 }
 
-// Store reads and writes only the sfsite- namespace of the Holdfast routes table.
+// Store reads and writes only the sfsite- namespace of the Steadholme routes table.
 type Store interface {
 	// ManagedNames lists the names of existing sfsite- rows (for prune diffing).
 	ManagedNames(ctx context.Context) ([]string, error)
